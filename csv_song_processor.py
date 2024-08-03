@@ -9,7 +9,7 @@ def get_unique_songs(input_filename):
     songs data
     :return: a set of unique songs.
     """
-    unique_songs = set()
+    unique_songs = []
 
     with open(input_filename, 'r') as csv_file:
         csv_reader = csv.reader(csv_file)
@@ -17,9 +17,14 @@ def get_unique_songs(input_filename):
 
         for row in csv_reader:
             song = f"{row[2]} by {row[3]}"
-            unique_songs.add(song)
+            if song not in unique_songs:
+                unique_songs.append(song)
+
+    if "Title by Artist" in unique_songs:
+        unique_songs.remove("Title by Artist")
 
     return unique_songs
+
 
 def write_unique_songs_to_file(output_filename, unique_songs):
     """
